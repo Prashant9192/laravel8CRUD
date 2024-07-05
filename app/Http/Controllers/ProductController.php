@@ -71,7 +71,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        return view('products.edit',compact('product'));
     }
 
     /**
@@ -83,7 +83,18 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+         // validate the inputs
+         $request->validate([
+            "name" => 'required',
+            "details" => 'required',
+        ]);
+
+        // update new product
+        $product->update($request->all());
+
+        // redirect the user and send friendly  message
+
+        return redirect()->route('products.index')->with('success','Product Updated Successfully');
     }
 
     /**
