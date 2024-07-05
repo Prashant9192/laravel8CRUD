@@ -26,7 +26,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view("products.create");
+        return view('products.create');
     }
 
     /**
@@ -37,19 +37,14 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // validate the inputs
         $request->validate([
-            "name" => 'required',
-            "details" => 'required',
+            'name' => 'required',
+            'detail' => 'required',
         ]);
 
-        // create new product
         Product::create($request->all());
 
-        // redirect the user and send friendly  message
-
-        return redirect()->route('products.index')->with('success','Product Created Successfully');
-
+        return redirect()->route('products.index')->with('success','Product created successfully.');
     }
 
     /**
@@ -83,28 +78,26 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-         // validate the inputs
-         $request->validate([
-            "name" => 'required',
-            "details" => 'required',
+        $request->validate([
+            'name' => 'required',
+            'detail' => 'required',
         ]);
 
-        // update new product
         $product->update($request->all());
 
-        // redirect the user and send friendly  message
-
-        return redirect()->route('products.index')->with('success','Product Updated Successfully');
+        return redirect()->route('products.index')->with('success','Product updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Product  $productF
      * @return \Illuminate\Http\Response
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+
+        return redirect()->route('products.index')->with('success','Product deleted successfully');
     }
 }
